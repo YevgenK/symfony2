@@ -1,0 +1,10 @@
+{% extends "::blog/page/1column.html.twig" %}
+
+{% block body %}
+    <h1>{{ post.getTitle() }}</h1>
+
+    <p>{{ post.getBody() }}</p>
+
+    <hr/>
+    <small>Post date: {{  post.getCreatedDate().format("Y-m-d H:i:s")  }}</small>
+{% endblock %}

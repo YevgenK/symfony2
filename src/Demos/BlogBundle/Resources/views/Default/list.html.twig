@@ -1,0 +1,17 @@
+{% extends "::blog/page/1column.html.twig" %}
+
+{% block body %}
+    <h1>All records</h1>
+    <span><a href="{{ url('demos_blog_create') }}">create new post</a></span>
+
+    {% for post in postCollection %}
+        <h2>
+            <a href="{{ url('demos_blog_show', {'id' : post.getId() }) }}">{{ post.getTitle() }}</a>
+        </h2>
+
+        <p>{{ post.getBody() }}</p>
+        <hr/>
+
+        <small>Post date: {{  post.getCreatedDate().format("Y-m-d H:i:s")  }}</small>
+    {% endfor %}s
+{% endblock %}

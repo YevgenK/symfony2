@@ -1,0 +1,19 @@
+demos_blog_create:
+    pattern:  /blog/create
+    defaults: { _controller: DemosBlogBundle:Default:create }
+
+demos_blog_create_success:
+    pattern:  /blog/create/success
+    defaults: { _controller: DemosBlogBundle:Default:success }
+
+demos_blog_list:
+    pattern:  /blog/list
+    defaults: { _controller: DemosBlogBundle:Default:list }
+
+demos_blog_show:
+    pattern:  /blog/show/{id}
+    defaults: { _controller: DemosBlogBundle:Default:show }
+
+demos_blog_homepage:
+    pattern:  /blog/{name}
+    defaults: { _controller: DemosBlogBundle:Default:index }
