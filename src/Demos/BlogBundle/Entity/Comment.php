@@ -9,14 +9,13 @@
 
 namespace Demos\BlogBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="post")
+ * @ORM\Table(name="comment")
  */
-class Post {
+class Comment {
 
     /**
      * @ORM\Id
@@ -26,19 +25,15 @@ class Post {
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="Post", inversedBy="comment_id", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="post_id", referencedColumnName="id", onDelete="CASCADE")
      */
-    protected $title;
+    protected $post_id;
 
     /**
      * @ORM\Column(type="text")
      */
-    protected $body;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="post_id", cascade={"persist", "remove"})
-     */
-    protected $comment_id;
+    protected $comment;
 
     /**
      * @ORM\Column(type="datetime")
@@ -50,10 +45,6 @@ class Post {
      */
     protected $updated_date;
 
-    public function __construct()
-    {
-        $this->comment_id = new ArrayCollection();
-    }
 
     /**
      * Get id
@@ -66,56 +57,33 @@ class Post {
     }
 
     /**
-     * Set title
+     * Set comment
      *
-     * @param string $title
-     * @return Post
+     * @param string $comment
+     * @return Comment
      */
-    public function setTitle($title)
+    public function setComment($comment)
     {
-        $this->title = $title;
+        $this->comment = $comment;
     
         return $this;
     }
 
     /**
-     * Get title
+     * Get comment
      *
      * @return string 
      */
-    public function getTitle()
+    public function getComment()
     {
-        return $this->title;
-    }
-
-    /**
-     * Set body
-     *
-     * @param string $body
-     * @return Post
-     */
-    public function setBody($body)
-    {
-        $this->body = $body;
-    
-        return $this;
-    }
-
-    /**
-     * Get body
-     *
-     * @return string 
-     */
-    public function getBody()
-    {
-        return $this->body;
+        return $this->comment;
     }
 
     /**
      * Set created_date
      *
      * @param \DateTime $createdDate
-     * @return Post
+     * @return Comment
      */
     public function setCreatedDate($createdDate)
     {
@@ -138,7 +106,7 @@ class Post {
      * Set updated_date
      *
      * @param \DateTime $updatedDate
-     * @return Post
+     * @return Comment
      */
     public function setUpdatedDate($updatedDate)
     {
@@ -158,35 +126,25 @@ class Post {
     }
 
     /**
-     * Add comment_id
+     * Set post_id
      *
-     * @param \Demos\BlogBundle\Entity\Comment $commentId
-     * @return Post
+     * @param \Demos\BlogBundle\Entity\Post $postId
+     * @return Comment
      */
-    public function addCommentId(\Demos\BlogBundle\Entity\Comment $commentId)
+    public function setPostId(\Demos\BlogBundle\Entity\Post $postId = null)
     {
-        $this->comment_id[] = $commentId;
+        $this->post_id = $postId;
     
         return $this;
     }
 
     /**
-     * Remove comment_id
+     * Get post_id
      *
-     * @param \Demos\BlogBundle\Entity\Comment $commentId
+     * @return \Demos\BlogBundle\Entity\Post 
      */
-    public function removeCommentId(\Demos\BlogBundle\Entity\Comment $commentId)
+    public function getPostId()
     {
-        $this->comment_id->removeElement($commentId);
-    }
-
-    /**
-     * Get comment_id
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getCommentId()
-    {
-        return $this->comment_id;
+        return $this->post_id;
     }
 }
