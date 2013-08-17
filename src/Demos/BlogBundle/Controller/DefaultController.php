@@ -5,6 +5,7 @@ namespace Demos\BlogBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Demos\BlogBundle\Entity\Post;
+use Demos\BlogBundle\Entity\Comment;
 
 class DefaultController extends Controller
 {
@@ -49,14 +50,30 @@ class DefaultController extends Controller
 
     public function showAction($id)
     {
-        $post = $this->getDoctrine()->getRepository('DemosBlogBundle:Post')->find($id);
+        $comment = new Comment();
+        $comment->setPostId($id);
+        $form = $this->createFormBuilder($comment)
+            ->setAction($this->generateUrl('demos_blog_comment'))
+            ->setMethod('POST')
+            ->add('post_id', 'hidden')
+            ->add('comment', 'textarea', array(
+                'label' => 'Leave a comment'
+            ))
+            ->add('save', 'submit', array(
+                'attr' => array(
+                    'class' => 'btn'
+                )
+            ))
+            ->getForm();
 
+        $post = $this->getDoctrine()->getRepository('DemosBlogBundle:Post')->find($id);
         if (!$post) {
             throw $this->createNotFoundException('Page not found!');
         }
 
         return $this->render('DemosBlogBundle:Default:show.html.twig', array(
-            'post' => $post
+            'post' => $post,
+            'form' => $form->createView()
         ));
     }
 

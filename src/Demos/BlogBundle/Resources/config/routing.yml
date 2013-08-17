@@ -17,3 +17,7 @@ demos_blog_show:
 demos_blog_homepage:
     pattern:  /blog/{name}
     defaults: { _controller: DemosBlogBundle:Default:index }
+
+demos_blog_comment:
+    pattern:  /blog/comment/
+    defaults: { _controller: DemosBlogBundle:Comment:create }

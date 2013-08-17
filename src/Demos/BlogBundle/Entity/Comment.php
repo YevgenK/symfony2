@@ -10,6 +10,7 @@
 namespace Demos\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -31,6 +32,7 @@ class Comment {
     protected $post_id;
 
     /**
+     * @Assert\NotBlank
      * @ORM\Column(type="text")
      */
     protected $comment;
@@ -128,10 +130,10 @@ class Comment {
     /**
      * Set post_id
      *
-     * @param \Demos\BlogBundle\Entity\Post $postId
+     * @param $postId
      * @return Comment
      */
-    public function setPostId(\Demos\BlogBundle\Entity\Post $postId = null)
+    public function setPostId($postId = null)
     {
         $this->post_id = $postId;
     

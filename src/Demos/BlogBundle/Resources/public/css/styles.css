@@ -3,3 +3,6 @@
 .one-column .wrapper{
     padding: 15px 0 0 15px;
 }
+.one-column .span6{
+    padding-bottom: 25px;
+}

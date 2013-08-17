@@ -3,21 +3,45 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
+
         {% block stylesheets %}
             {% stylesheets '@DemosBlogBundle/Resources/public/css/*' %}
                 <link rel="stylesheet" href="{{ asset_url }}" />
             {% endstylesheets %}
         {% endblock %}
+
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
+
     <body class="one-column">
+        {# Flash messages START #}
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert alert-info">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('error') %}
+            <div class="alert alert-error">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+        {# Flash messages END #}
+
         <div class="wrapper">
             {% block body %}{% endblock %}
         </div>
+
         {% block javascripts %}
+            <script type="text/javascript" src="/js/lib/1_10_jquery.js"></script>
             {% javascripts '@DemosBlogBundle/Resources/public/js/*' output='js/compiled/main.js' %}
                 <script type="text/javascript" src="{{ asset_url }}"></script>
             {% endjavascripts %}
         {% endblock %}
+
     </body>
 </html>
